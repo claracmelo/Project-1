@@ -1,0 +1,49 @@
+pccountPoints = 0
+pcRound += 1
+for (i in allCategories) {
+    
+    pcPlay = Math.floor(Math.random() * 2)
+    console.log("one or zero", pcPlay)
+    if (pcPlay == 0) {
+        let pcRandomWord = allCategories[i][Math.floor(Math.random() * allCategories[i].length)]
+
+
+        if (pcRound<=1){
+            console.log("numero do round",pcRound)
+            document.querySelector(`#${pcliCategoriesChanged[i]}`).setAttribute("value", pcRandomWord)
+            console.log("word ", pcRandomWord)
+            pcWord = document.querySelector(`#${pcliCategoriesChanged[i]}`)
+        }else if
+            (pcRound>=3){document.querySelector(`#${pcinputCategories[i]}`).setAttribute("value", pcRandomWord)
+            console.log("word ", pcRandomWord)
+            pcWord = document.querySelector(`#${pcinputCategories[i]}`)
+        }
+
+        pcWord.style.color = "green"
+        pccountPoints += 10
+    } else {
+        if (pcRound<=1) {
+            document.querySelector(`#${pcliCategoriesChanged[i]}`).setAttribute("value", "I don't know")
+            console.log("word ", pcRandomWord)
+            pcWord = document.querySelector(`#${pcliCategoriesChanged[i]}`)
+        } else  if
+        (pcRound>=){
+            document.querySelector(`#${pcinputCategories[i]}`).setAttribute("value", "I don't know")
+            pcWord = document.querySelector(`#${pcinputCategories[i]}`)
+        }
+        pcWord.style.color = "red"
+        
+    }
+}
+pcscoreTotal += pccountPoints
+if(pcRound<=1){
+document.querySelector("#score_3 ").setAttribute("value", pccountPoints)
+// let pcscoress = document.querySelector("#score_2").value
+document.querySelector("#scoreTop2").setAttribute("value", pcscoreTotal)
+document.getElementById("scoreTop2").innerHTML = `Total: ${pcscoreTotal}`
+}else{
+    document.querySelector("#score_2").setAttribute("value", pccountPoints)
+    // let pcscoress = document.querySelector("#score_2").value
+    document.querySelector("#scoreTop2").setAttribute("value", pcscoreTotal)
+    document.getElementById("scoreTop2").innerHTML = `Total: ${pcscoreTotal}`
+}
