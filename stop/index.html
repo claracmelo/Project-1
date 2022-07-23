@@ -4,12 +4,9 @@
 <head>
     <title>STOP</title>
     <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-        crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,9 +17,9 @@
 <body>
     <header id="header">
         <div id="title-stop">
-            <button id="btn-stop" class="btn" type="submit">
-                STOP
-            </button>
+            <input id="btn-stop" class="btn" type="submit" disabled value="STOP">
+                <!-- STOP
+            </button> -->
 
         </div>
     </header>
@@ -102,9 +99,9 @@
                 </div>
                 <div id="category">
                     <div class="category" id="animal">
-                        <span class="span-category" id="category_0">ANIMAL</span>
+                        <span class="span-category" id="category_1">ANIMAL</span>
                         <ol id="ol-animal">
-                            <li id="li-animal_1"><input id="animal_1" class="li" type="text"
+                            <li id="li-animal"><input id="animal_1" class="li" type="text"
                                     onkeyup="this.value = this.value.toUpperCase();">
                             </li>
                         </ol>
@@ -113,14 +110,14 @@
                         <span class="span-category" id="category_1">COLOR</span>
 
                         <ol id="ol-color">
-                            <li id="li-color_1"><input id="color_1" class="li" type="text"
+                            <li id="li-color"><input id="color_1" class="li" type="text"
                                     onkeyup="this.value = this.value.toUpperCase();"></li>
                         </ol>
                     </div>
                     <div class="category" id="state">
-                        <span class="span-category" id="category_2">STATE</span>
+                        <span class="span-category" id="category_1">STATE</span>
                         <ol id="ol-state">
-                            <li id="li-state_1"><input id="state_1" class="li" type="text"
+                            <li id="li-state"><input id="state_1" class="li" type="text"
                                     onkeyup="this.value = this.value.toUpperCase();">
                             </li>
                         </ol>
@@ -128,9 +125,9 @@
                     <div class="category" id="country">
                         <span class="span-category" id="category_1">COUNTRY</span>
                         <ol id="ol-country">
-                            <li id="li-country_1">
+                            <li id="li-country">
                                 <input id="country_1" class="li" type="text"
-                                    onkeyup="this.value = this.value.toUpperCase();">
+                                    onkeyup="this.value = this.value.toUpperCase();" >
                             </li>
                         </ol>
                     </div>
@@ -138,7 +135,55 @@
                         <span class="span-category">SCORE</span>
 
                         <ol id="ol-score">
-                            <li id="li-score_1"><input id="score_1" class="li" type="text" value="0" disabled></li>
+                            <li id="li-score"><input id="score_1" class="li" type="text" value="0" disabled></li>
+
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div id="game-player2">
+                <div id="player-score2">
+                    <span class="player-score2" id="player-name2">NAME</span>
+                    <span class="player-score2" id="scoreTop2" value="Score2">SCORE: </span>
+                </div>
+                <div id="category2">
+                    <div class="category2" id="animal2">
+                        <span class="span-category2" id="category_2">ANIMAL</span>
+                        <ol id="ol-animal2">
+                            <li id="li-animal2"><input id="animal_2" class="li" 
+                                     disabled>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="category2" id="color2">
+                        <span class="span-category2" id="category_2">COLOR</span>
+                        <ol id="ol-color2">
+                            <li id="li-color2"><input id="color_2" class="li2" type="text"
+                                     disabled></li>
+                        </ol>
+                    </div>
+                    <div class="category2" id="state2">
+                        <span class="span-category2" id="category_2">STATE</span>
+                        <ol id="ol-state2">
+                            <li id="li-state2"><input id="state_2" class="li2" type="text"
+                                     disabled>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="category2" id="country2">
+                        <span class="span-category2" id="category_2">COUNTRY</span>
+                        <ol id="ol-country2">
+                            <li id="li-country2">
+                                <input id="country_2" class="li2" type="text"
+                                    disabled>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="category2" id="score2">
+                        <span class="span-category2">SCORE</span>
+
+                        <ol id="ol-score2">
+                            <li id="li-score2"><input id="score_2" class="li2" type="text" value="0" disabled></li>
 
                         </ol>
                     </div>
@@ -172,6 +217,15 @@
     </footer>
 
     <script src="js/app.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 </body>
 
 </html>
+
+
+
+
+
+
+    

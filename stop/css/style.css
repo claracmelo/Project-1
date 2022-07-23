@@ -1,18 +1,38 @@
 /* 
+O componente de tabelas vai ser útil para fazer aquele efeito de folha de caderno que você queria
+https://getbootstrap.com/docs/4.3/content/tables/
+
+Esse componente vai ser útil para voce deixar bonitinho os containers
+https://getbootstrap.com/docs/4.3/components/card/#body
+
+*/
+
+/* 
+-------------------------------------------------------
+                    DISPLAY GAME    
+-------------------------------------------------------
+ */
+#playing-game,#players1
+{
+    display:none
+}
+ 
+
+#plaing-game_1,#players,#game-player2
+
+{
+    display: block;
+}
+
+
+/* 
 -------------------------------------------------------
                     OPACITY    
 -------------------------------------------------------
  */
 
 
-#players,
 #rounds
-/* .ipt_player_1,
-.ipt_player_2, */
-/* #header-timer,
-#timers, 
-#round-timer, 
-#game-player */
 
 {
     opacity: 0.0;
@@ -21,11 +41,7 @@
 
 /* #players,
 #rounds,
-.ipt_player_1,
-.ipt_player_2,
-#timers,
-#round-timer,
-#game-player */
+ */
 /* {
     opacity: 1;
 } */
@@ -41,14 +57,15 @@ body,
 #main, 
 .btn,
 #footer-name,
-/* #div_player_1, 
-#div_player_2, */
 .ipt_player_1,
 #timers,
 #game-player,
+#game-player2,
 #player-score,
+#player-score2,
 #round-timer,
 .categoryChange,
+.category2,
 .category,
 #name-text, 
 #score-text
@@ -56,17 +73,6 @@ body,
     border: 2px solid black;
 }
 
-
-#timers, 
-#round-timer, 
-#game-player,
-.li,
-.liChage,
-.category,
-#player-score{
-    border: 2px solid white;
-    color: white;
-}
 
 /* 
 -------------------------------------------------------
@@ -98,6 +104,7 @@ body,
 }
 
 /* 25px */
+#player-score2,
 #player-score
 {
     border-radius: 25px;
@@ -129,6 +136,7 @@ body,
 #btn-start,
 .categoryChange,
 .category
+.category2
 {
     border-radius: 50px;
 }
@@ -157,6 +165,7 @@ body,
 }
 
 /* 120px */
+#game-player2,
 #game-player
 {
     border-radius: 120px;
@@ -191,6 +200,7 @@ body{
 #btn-back
 #btn-restart
 .timer
+#player-score2
 #player-score
 {
     font-size: 25px;
@@ -230,6 +240,7 @@ body{
 
 /* large */
 .category,
+.category2,
 .categoryChange
 {
     font-size: large;
@@ -462,7 +473,7 @@ body{
     margin: -49% 250px -3% 250px;
     position: relative;
 }
-
+#game-player2,
 #game-player{
     height: 750px;
     margin: 50px 170px 50px 170px;
@@ -489,7 +500,7 @@ body{
 #timer, #letter{
     margin-left: 65px;
 }
-
+#player-score2,
 #player-score{
     margin-top: 2%;
     padding: 25px 100px 25px 100px;
@@ -497,6 +508,7 @@ body{
     border-radius: 25px;  
 
 }
+#category2,
 #category{
     display: flex;
     justify-content: space-evenly;
@@ -504,6 +516,7 @@ body{
     height: 570px;
 
 }
+.span-category2,
 .span-category{
     display: flex;
     justify-content: center;
@@ -512,6 +525,7 @@ body{
 
 }
 .categoryChange,
+.category2,
 .category{
     padding: 20px 10px 10px 10px;
     border-radius: 50px;
@@ -521,10 +535,12 @@ li{
     padding-top: 15px;
 }
 .liChage,
-.li
+.li,
+.li2
 {
     border-radius: 10px;
 }
+#scoreTop2,
 #scoreTop{
     float: right;
     margin-right: 50px;
@@ -538,12 +554,7 @@ li{
 -------------------------------------------------------
  */
 
- #start{
-    z-index: 3;
-}
-#names{
-    z-index: 2;
-} 
+
  #playing-game,#game-play{
     z-index: 1;
     /* opacity: 0.0; */

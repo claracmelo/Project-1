@@ -8,10 +8,23 @@ const divRound = ["","",""]
 const divPlayers = ["div_player_1","ready","back"]
 const btnPlayers = ["upt-player","btn-ready_1","btn-back"]
 const playingID = ["timers","round-timer","game-player","player-score"]
-const liCategories = ["animal_1","color_1","state_1","country_1","score_1"]
+const inputCategories = ["animal_1","color_1","state_1","country_1","score_1"]
 const liCategoriesChanged = ["animal_0","color_0","state_0","country_0","score_0"]
 const idCategories = ["animal","color","state","country","score"]
 const olCategories = ["ol-animal","ol-color","ol-state","ol-country","ol-score"]
+const liNewCategories = ["li-animal","li-color","li-state","li-country","li-score"]
+const liOldCategories = ["li-animal_1","li-color_1","li-state_1","li-country_1","li-score_1"]
+const buttonPlayers = ["RULES","PL vs CP", "PL vs PL"]
+
+// computer
+
+const pcliNewCategories = ["li-animal2","li-color2","li-state2","li-country2","li-score2"]
+const pcliOldCategories = ["li-animal_2","li-color_2","li-state_2","li-country_2","li-score_1"]
+const pcinputCategories = ["animal_2","color_2","state_2","country_2","score_2"]
+const pcliCategoriesChanged = ["animal_3","color_3","state_3","country_3","score_3"]
+const pcidCategories = ["animal2","color2","state2","country2","score2"]
+const pcolCategories = ["ol-animal2","ol-color2","ol-state2","ol-country2","ol-score2"]
+
 
 //----------------------------------------------------------------------//
 // DB  - ANIMALS - ENGLISH   
@@ -236,6 +249,10 @@ const countryCategory = [
 "ZAMBIA","ZIMBABWE"]
 
 //----------------------------------------------------------------------//
+//  ALL CATEGORIES
+//----------------------------------------------------------------------//
+const allCategories = [animalCategory,colorCategory,stateCategory,countryCategory]
+//----------------------------------------------------------------------//
 // CLASSES - Player/Categories   
 //----------------------------------------------------------------------//
 
@@ -259,6 +276,7 @@ class Rounds {
         playerRound.state.push(country)
         playerRound.score.push(scores)   
     }
+
 }
 
 //----------------------------------------------------------------------//
@@ -270,12 +288,22 @@ let counterDown = 1000*120
 let stopRound = true
 let playerChoice = 0;
 let single= new Player()
+let multiplayer = new Player ("Computer")
+
 let playerRound, singleP, multiP
 let gifTime  = 3000
 let count = 0
 let countPoints = 0
 let countRoundNumber =0
 let scoreTotal = 0
+let countRounds = 1
+let timesUp = false
+let pcPlay = 0
+let pcWord = ""
+let pccountPoints = 0
+let pcscoreTotal = 0
+let pcRound = 0
+
 
 
 //----------------------------------------------------------------------//
@@ -283,9 +311,7 @@ let scoreTotal = 0
 //----------------------------------------------------------------------//
 const start = () => {
     document.querySelector("#start").remove();
-
     addButtonsMultiplayer ();
-
 }
 
 //----------------------------------------------------------------------//
@@ -301,21 +327,15 @@ const addButtonsMultiplayer = ()=> {
          let btn = document.createElement("button")
          btn.setAttribute("id", divPlyerButton[i])
          btn.setAttribute("class","btn")
-         btn.innerHTML = divPlyer[i]
+         btn.innerHTML = buttonPlayers[i]
          let dRules = document.querySelector(`#${divPlyer[i]}`);
          dRules.appendChild(btn);         
      }
-
-    //selec parents - div players //
-    document.querySelector("#players").style.opacity=1;
- 
     //create onclick event//
     document.getElementById("btn-rules").addEventListener('click', rules);
     document.getElementById("btn-rule").addEventListener('click', rules);
     document.getElementById("btn-player_1").addEventListener('click', singlePlayer);
     document.getElementById("btn-player_2").addEventListener('click', multiPlayer);
-
-    
 }
 //----------------------------------------------------------------------//
 //  RESTART button - reload function
@@ -324,6 +344,7 @@ const restart = () => {
     let restart = confirm("Do you want to RESTART STOP");
     if (restart) {
         alert("Let's start over!");
+        location.reload()
     } else {
         alert("Good decision!");
     }
@@ -344,40 +365,34 @@ const singlePlayer =()=>{
     document.querySelector("#players").remove();
     document.querySelector("#main").style.opacity=0.0;
     
-
-    let div = document.createElement("div")
-    div.setAttribute("id",divPlayers[0])
-    let divP = document.querySelector(".ipt_player_1") 
-    divP.appendChild(div)
-    let ipt = document.createElement("input")
-    ipt.setAttribute("id","upt-player_1")
-    ipt.setAttribute("type","text")
-    ipt.text = "Type Player 1 Name"
-    ipt.setAttribute("value","Type Player 1 Name")
-    let dIpt = document.querySelector(`#${divPlayers[0]}`);
-    dIpt.appendChild(ipt);
-
-    for (let i=1;i<=1;i++){
+    for (let i=0;i<=1;i++){
         let div = document.createElement("div")
         div.setAttribute("id",divPlayers[i])
         let divP = document.querySelector(".ipt_player_1") 
         divP.appendChild(div)
-        console.log( document.querySelector("#divP"))
+        if(i==0){
+            let ipt = document.createElement("input")
+            ipt.setAttribute("id","upt-player_1")
+            ipt.setAttribute("type","text")
+            ipt.setAttribute("onkeyup","this.value = this.value.toUpperCase()")
+            ipt.text = "Type Player 1 Name"
+            ipt.setAttribute("value","TYPE PLAYER NAME")
+            let dIpt = document.querySelector(`#${divPlayers[i]}`);
+            dIpt.appendChild(ipt);
+        }else{
+
          let btn = document.createElement("button")
          btn.setAttribute("id", btnPlayers[i])
          btn.setAttribute("class","btn")
          btn.setAttribute("type","submit")
-         btn.innerHTML = divPlayers[i]
+         btn.innerHTML = "READY"
          
-         console.log( document.querySelector("#names"))
          let dRules = document.querySelector(`#${divPlayers[i]}`);
-         dRules.appendChild(btn);        
+         dRules.appendChild(btn);    
+        }    
      }
-
-     document.getElementById("btn-ready_1").addEventListener('click', ready);
-
-
-
+     //click event for REDADY button
+     document.getElementById("btn-ready_1").addEventListener('click', ready)
 }
 
 //----------------------------------------------------------------------//
@@ -390,21 +405,19 @@ const multiPlayer =()=>{
 //----------------------------------------------------------------------//
 //  READY button - loads screen for player 1  
 //----------------------------------------------------------------------//
+let namePlayer =""
 const ready=()=>{
+    
+    //display as block
+    document.querySelector("#playing-game").setAttribute("id","#playing-game_1")
 
-    let namePlayer = document.querySelector("#upt-player_1").value.toUpperCase()
+    //get player's name
+    namePlayer = document.querySelector("#upt-player_1").value.toUpperCase()
     newPlayer(namePlayer)
     playerChoice=1;
-
+    document.querySelector("#player-name2").innerHTML = "COMPUTER"
     document.querySelector("#player-name").innerHTML = namePlayer
-    document.querySelector("#names").remove();
-    
-
-    // let x = setInterval(function() {
-
-    // gifTime-=1000;
-    // // If the count down is finished, write some text
-    // if (gifTime < 0 ) {
+    document.querySelector("#names").remove();    
     document.querySelector("#main").remove();
     document.getElementById("game").style.marginTop = "52%";        
     document.getElementById("game").style.marginBottom="13"
@@ -412,29 +425,36 @@ const ready=()=>{
     document.getElementById(i).style.color = "black";
     document.getElementById(i).style.border="2px solid black"
     }
-    changeColor();
+
     document.getElementById("btn-stop").addEventListener('click', stop);
     randomLetter()
     timer()
     countRound()
     newPlayer(namePlayer)
+    alert(`Round ${countRounds} out of 4`)
+    document.querySelector("#btn-stop").disabled = false;
+    document.getElementById("btn-stop").style.color = "red";
     
-//         clearInterval(x);
-//     }
-//   }, 1000);
-
 }
+
+
+
+
 
 //----------------------------------------------------------------------//
 //  STOP - locks time and categories  
 //----------------------------------------------------------------------// 
 const stop=()=>{
+    if(stopRound){
     alert("STOP!")
-    
+    }    
 //----------------------------------------------------------------------//
 //  Confirm if Animal is in the array and give 10+ 
 //----------------------------------------------------------------------// 
 
+
+pcGame()
+    pcRandomWord()
     let animales = document.querySelector("#animal_1").value
     let word = document.querySelector("#animal_1")
     let comparissonAnimal = document.querySelector("#letter").innerHTML
@@ -495,10 +515,12 @@ if(colorCategory[j] == colorValue){
     if(stateFirstLetter == compareState){
     for(let l=0; l< stateCategory.length;l++){
     if(stateCategory[l] == stateValue){
+        console.log(`word typer ${stateValue} word compared ${stateCategory}`)
         stateWord.style.color="green"
         countPoints+=10 
         l = stateCategory.length
     }else{
+        
         stateWord.style.color="red"
     }  
     }
@@ -535,36 +557,92 @@ if(colorCategory[j] == colorValue){
 //----------------------------------------------------------------------//
 //  add points to Score 
 //----------------------------------------------------------------------// 
-       
-scoreTotal +=countPoints
+       //player 1
+    scoreTotal += countPoints
 
-    document.querySelector("#score_1").setAttribute("value",countPoints)
+    document.querySelector("#score_1").setAttribute("value", countPoints)
     let scoress = document.querySelector("#score_1").value
-    document.querySelector("#scoreTop").setAttribute("value",scoreTotal)
-         document.getElementById("scoreTop").innerHTML = `Total: ${scoreTotal}`
+    document.querySelector("#scoreTop").setAttribute("value", scoreTotal)
+    document.getElementById("scoreTop").innerHTML = `Total: ${scoreTotal}`
+
 
 //----------------------------------------------------------------------//
 //  add to class 
 //----------------------------------------------------------------------//    
     newRound(animales,colorValue,stateValue,countryValue,scoress)
+    // newR.compareWOrds(single)
+
+//----------------------------------------------------------------------//
+//  add to class 
+//----------------------------------------------------------------------//    
+
+    if(animales==document.querySelector("#score_2").value){
+        alert("It's a tie for a animal")
+    }
+    if(colorValue==document.querySelector("#color_2").value){
+        alert("It's a tie for color")
+    }
+    if(stateValue==document.querySelector("#state_2").value){
+        alert("It's a tie for state")
+    }
+    if(countryValue==document.querySelector("#country_2").value){
+        alert("It's a tie for country")
+    }
+    
 
 //----------------------------------------------------------------------//
 //  stop clock 
 //----------------------------------------------------------------------//  
     stopRound=false;
 
-    //function to change round
-    //function to add a new line
-
+//----------------------------------------------------------------------//
+//  CHANGE IDS AND ADD NEW ROW
+//----------------------------------------------------------------------//  
+//extra - make it cleaner
 document.getElementById("animal_1").setAttribute("id","animal_0")
 document.getElementById("color_1").setAttribute("id","color_0")
 document.getElementById("state_1").setAttribute("id","state_0")
 document.getElementById("country_1").setAttribute("id","country_0")
 document.getElementById("score_1").setAttribute("id","score_0")
+document.getElementById("li-animal").setAttribute("id","li-animal_1")
+document.getElementById("li-color").setAttribute("id","li-color_1")
+document.getElementById("li-state").setAttribute("id","li-state_1")
+document.getElementById("li-country").setAttribute("id","li-country_1")
+document.getElementById("li-score").setAttribute("id","li-score_1")
+
+
+document.getElementById("animal_2").setAttribute("id","animal_3")
+document.getElementById("color_2").setAttribute("id","color_3")
+document.getElementById("state_2").setAttribute("id","state_3")
+document.getElementById("country_2").setAttribute("id","country_3")
+document.getElementById("score_2").setAttribute("id","score_3")
+
+
+
+document.getElementById("li-animal2").setAttribute("id","li-animal_2")
+document.getElementById("li-color2").setAttribute("id","li-color_2")
+document.getElementById("li-state2").setAttribute("id","li-state_2")
+document.getElementById("li-country2").setAttribute("id","li-country_2")
+document.getElementById("li-score2").setAttribute("id","li-score_2")
+
+
+countRounds+=1
 
 addRewRow()
+addRoundAlert()
+// pcRandomWord()
+if(countRounds==5)
+{
+    pcScore = document.querySelector("#scoreTop2").value
+    if(scoreTotal>pcscoreTotal){
+        alert(`${namePlayer} is the WINNER wiht ${scoreTotal} points`)
+    }else{
+    alert(`COMPUTER is the WINNER wiht ${pcscoreTotal} points`)}
+    document.getElementById("round").setAttribute("type","button")
+    document.getElementById("round").innerHTML = "RESTART"
+    document.getElementById("round").addEventListener('click', restart);
 }
-
+    }
 
 
 //----------------------------------------------------------------------//
@@ -572,21 +650,8 @@ addRewRow()
 //----------------------------------------------------------------------//
 const randomLetter = ()=>{
     const alphabet = "abcdefghijklmnopqrstuvwxyz"
-
     let ramdonLetter = alphabet[Math.floor(Math.random() * alphabet.length)]
     document.getElementById("letter").innerHTML = ramdonLetter.toUpperCase()
-}
-
-//----------------------------------------------------------------------//
-//  Changes color of PLAYING GAME div to show in the screen
-//----------------------------------------------------------------------//
-const changeColor=()=>{
-    while(document.querySelector(".li")){
-        document.querySelector(".li").setAttribute("class","liChange")
-        }
-        while(document.querySelector(".category")){
-        document.querySelector(".category").setAttribute("class","categoryChange")
-        }
 }
 
 //----------------------------------------------------------------------//
@@ -594,9 +659,7 @@ const changeColor=()=>{
 //----------------------------------------------------------------------//
 const timer =()=>{
     // Update the count down every 1 second
-
-    let x = setInterval(function() {
-        
+    let x = setInterval(function() {        
         counterDown-=1000;
         let minutes = Math.floor((counterDown % (1000 * 60 * 60)) / (1000 * 60));
         let seconds = Math.floor((counterDown % (1000 * 60)) / 1000);
@@ -604,23 +667,31 @@ const timer =()=>{
     // Display the result 
     document.getElementById("timer").innerHTML = "TIMER : "+minutes+" : "+ seconds;
     
-    
     // If the count down is finished, write some text
     if (counterDown < 0 ) {
       clearInterval(x);
       document.getElementById("timer").innerHTML = "EXPIRED";
-      stopRound = true
       counterDown = 1000*120
+      document.querySelector("#animal_1").disabled = true;
+      document.querySelector("#color_1").disabled = true;
+      document.querySelector("#state_1").disabled = true;
+      document.querySelector("#country_1").disabled = true;
+      timesUp=true
+      stopRound = true
+    //   alert("time's up - Press STOP to start a new round!")
     }
     // If press STOP button, stops the timer and display it
     if (stopRound==false){
         document.getElementById("timer").innerHTML = "TIMER : "+minutes+" : "+ seconds;
         clearInterval(x);
         stopRound = true
+        timesUp=false
         counterDown = 1000*120
     }
-  }, 1000);
-  
+    if(timesUp){
+        alert("time's up - Press STOP to start a new round!")
+    }
+  }, 1000); 
 }
 
 //----------------------------------------------------------------------//
@@ -647,53 +718,143 @@ const newPlayer = (newP)=>{
 
 
 //----------------------------------------------------------------------//
-//   CHANGE ROUND BUTTON TO READY
-//----------------------------------------------------------------------//
-
-
-//----------------------------------------------------------------------//
-//   CHANGE BEFORE ROW ID'S  
-//----------------------------------------------------------------------//
-
-
-//----------------------------------------------------------------------//
-//   ADD SCORE TO MAIN SCORE
-//----------------------------------------------------------------------//
-
-
-//----------------------------------------------------------------------//
 //   ADD NEW ROW
 //----------------------------------------------------------------------//
 
 // const liNewRow =[]
 
 const addRewRow =()=>{
-{/* <ol id="ol-country">
- <li><input  */}
-countRoundNumber+=1
- if(countRoundNumber<=3){
 
-        for(let i=0;i<=4;i++){
-            
-        let inputNewRow = document.createElement("input")
-        inputNewRow.setAttribute("id",liCategories[i])
-        let olCat = document.querySelector(`#${olCategories[i]}`) 
-        olCat.appendChild(inputNewRow)
-        inputNewRow.setAttribute("onkeyup","this.value = this.value.toUpperCase()")
-        if(i==4){
-            document.querySelector("#score_1").disabled = true;
-        }
+ countRoundNumber+=1
+
+    if (countRoundNumber <= 3) {
+
+        for (let i = 0; i <= 4; i++) {
+            //new li
+            let newLi = document.createElement("li")
+            newLi.setAttribute("id", liNewCategories[i])
+            let olCat = document.querySelector(`#${olCategories[i]}`)
+            olCat.appendChild(newLi)
+            //new input
+            let inputNewRow = document.createElement("input")
+            inputNewRow.setAttribute("id", inputCategories[i])
+            inputNewRow.setAttribute("class", "li")
+            let liCat = document.querySelector(`#${liNewCategories[i]}`)
+            liCat.appendChild(inputNewRow)
+            inputNewRow.setAttribute("onkeyup", "this.value = this.value.toUpperCase()")
+
+            if (i == 4) {
+                document.querySelector("#score_1").disabled = true;
+            }
         }
         countRound()
         timer()
         randomLetter()
-        countPoints=0
+        countPoints = 0
+    }
 
-    }
-    else{
-        alert(`THE END - You have X points`)
-    }
- 
-    //create onclick event//
-    // document.getElementById("btn-rules").addEventListener('click', rules);
 }
+
+
+//----------------------------------------------------------------------//
+//   ROUND ALERT 
+//----------------------------------------------------------------------//
+
+    const addRoundAlert = () => {
+        
+     if (countRounds == 4) {
+            alert(`This is FINAL ROUND!`)
+     }if (countRounds == 5){
+            document.querySelector("#btn-stop").disabled = true;
+        }
+    }
+
+//----------------------------------------------------------------------//
+//   PC ramdon 
+//----------------------------------------------------------------------//
+let ramdonArray=[]
+let ramdonWordCount = 0
+let pcWordArray=[]
+const pcRandomWord = () => {
+
+    pccountPoints = 0
+    pcRound += 1
+
+    let gameLetter = document.querySelector("#letter").innerHTML
+    for (i in allCategories) {//0 to 4
+        pcPlay = Math.floor(Math.random() * 2)
+        if (pcPlay == 0) {
+
+            for (x of allCategories[i]) {
+                if (x[0] == gameLetter) {
+                    ramdonArray[ramdonWordCount] = x
+                    ramdonWordCount++
+                    console.log("this is the number of words", ramdonWordCount)
+                }
+            }
+
+            let pcRandomWord = ramdonArray[Math.floor(Math.random() * ramdonArray.length)]
+            if (pcRandomWord===undefined) {
+                pcWord = document.querySelector(`#${pcinputCategories[i]}`)
+                pcWord.style.color = "red"
+                pcWordArray[i]=document.querySelector(`#${pcinputCategories[i]}`).setAttribute("value", "NO WORD")
+                pcWordArray[i]=document.querySelector(`#${pcinputCategories[i]}`).value
+            } else {
+                pcWordArray[i]=document.querySelector(`#${pcinputCategories[i]}`).setAttribute("value", pcRandomWord)
+                pcWordArray[i]=document.querySelector(`#${pcinputCategories[i]}`).value
+
+                pcWord = document.querySelector(`#${pcinputCategories[i]}`)
+                pcWord.style.color = "green"
+                pccountPoints += 10
+                console.log("right word:", pcRandomWord)
+            }
+        }
+        else {
+
+            pcWord = document.querySelector(`#${pcinputCategories[i]}`)
+            document.querySelector(`#${pcinputCategories[i]}`).setAttribute("value", "YOU GOT ME!")
+            pcWordArray[i]= "YOU GOT ME"
+            pcWord.style.color = "red"
+        }
+        console.log("pontos", pccountPoints)
+
+        computerClass(pcWordArray[0],pcWordArray[1],pcWordArray[2],pcWordArray[3],pccountPoints)
+    }
+    pcscoreTotal += pccountPoints
+
+    document.querySelector("#score_2").setAttribute("value", pccountPoints)
+    // document.querySelector("#scoreTop2").setAttribute("value", pcscoreTotal)
+    document.getElementById("scoreTop2").innerHTML = `Total: ${pcscoreTotal}`
+    ramdonArray = []
+    ramdonWordCount = 0
+}
+
+
+const pcGame =()=>{
+    if (countRoundNumber !==1) {
+        if (countRoundNumber !==1) 
+        for (let i = 0; i <=4; i++) {
+            //new pc li
+            let pcnewLi = document.createElement("li")
+            pcnewLi.setAttribute("id", pcliNewCategories[i])
+            let pcolCat = document.querySelector(`#${pcolCategories[i]}`)
+            pcolCat.appendChild(pcnewLi)
+            //new pc input
+            let pcinputNewRow = document.createElement("input")
+            pcinputNewRow.setAttribute("id", pcinputCategories[i])
+            pcinputNewRow.setAttribute("class", "li2")
+            let pcliCat = document.querySelector(`#${pcliNewCategories[i]}`)
+            pcliCat.appendChild(pcinputNewRow)
+            document.querySelector(`#${pcinputCategories[i]}`).disabled = true;
+        }
+}}
+let computerRound = new Rounds ()
+const computerClass = (animal,color,state,country,score)=>{
+    computerRound  = new Rounds(animal,color,state,country,score)
+    console.log("this is the computer ",computerRound)
+}
+
+
+
+
+
