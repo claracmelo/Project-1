@@ -296,7 +296,15 @@ let pcWord = ""
 let pccountPoints = 0
 let pcscoreTotal = 0
 let pcRound = 0
-
+let stateY=0
+let countryY=0
+let animalY=0
+let colorY=0
+let ramdonArray=[]
+let ramdonWordCount = 0
+let inputBox
+let w = 0
+let y=0
 
 
 //----------------------------------------------------------------------//
@@ -354,7 +362,7 @@ const rules =()=>{
 const singlePlayer =()=>{
     let addClass = document.querySelector("#names :nth-child(1)")
     addClass.setAttribute("class","ipt_player_1")
-    console.log( document.querySelector("#names"))
+
     document.querySelector("#players").remove();
     document.querySelector("#main").style.opacity=0.0;
     
@@ -459,7 +467,7 @@ const stop=()=>{
     }  
     }
     } else{
-            console.log("wrong letter")
+
             word.style.color="red"
         }
 //----------------------------------------------------------------------//
@@ -501,7 +509,6 @@ if(colorCategory[j] == colorValue){
     if(stateFirstLetter == compareState){
     for(let l=0; l< stateCategory.length;l++){
     if(stateCategory[l] == stateValue){
-        console.log(`word typer ${stateValue} word compared ${stateCategory}`)
         stateWord.style.color="green"
         countPoints+=10 
         l = stateCategory.length
@@ -559,22 +566,225 @@ if(colorCategory[j] == colorValue){
     // newR.compareWOrds(single)
 
 //----------------------------------------------------------------------//
-//  add to class 
+//  COMPUTER ANIMAL FIELD
 //----------------------------------------------------------------------//    
 
-    // if(animales==document.querySelector("#score_2").value){
-    //     alert("It's a tie for a animal")
-    // }
-    // if(colorValue==document.querySelector("#color_2").value){
-    //     alert("It's a tie for color")
-    // }
-    // if(stateValue==document.querySelector("#state_2").value){
-    //     alert("It's a tie for state")
-    // }
-    // if(countryValue==document.querySelector("#country_2").value){
-    //     alert("It's a tie for country")
-    // }
+let gameLetter = document.querySelector("#letter").innerHTML
+    let animalArray=[]
+            //random 0 or 1 - for the computer to play
+            pcPlay = Math.floor(Math.random() * 2)
+            let inputAnimal = `a-${animalY}`
+
+            if (pcPlay == 0) {
+
+                //each item in the category
+                for (let x of animalCategory) {
+
+                    //check if first letter match game letter 
+                    if (x[0] == gameLetter) {
+                        //push the word to array
+                        animalArray[ramdonWordCount] = x
+                        ramdonWordCount++
+                    }
+                }
+               
+                //create new variable to store the random value
+                let pcRandomWord = animalArray[Math.floor(Math.random() * animalArray.length)]
+                animalArray=[]
+                ramdonWordCount=0
     
+                
+                if (pcRandomWord===undefined) {
+                    pcWord = document.querySelector(`#${inputAnimal}`)
+                    pcWord.style.color = "orange"
+                    document.querySelector(`#${inputAnimal}`).setAttribute("value", "NO WORD")
+                } else {
+                    //
+                    document.querySelector(`#${inputAnimal}`).setAttribute("value", pcRandomWord)
+    
+                    pcWord = document.querySelector(`#${inputAnimal}`)
+                    pcWord.style.color = "green"
+                    pccountPoints += 10
+                } 
+            }
+            else {
+    
+                pcWord = document.querySelector(`#${inputAnimal}`)
+                document.querySelector(`#${inputAnimal}`).setAttribute("value", "YOU GOT ME!")
+                
+                pcWord.style.color = "red"
+                
+            }
+            animalY++
+//----------------------------------------------------------------------//
+//  COMPUTER COLOR FIELD
+//----------------------------------------------------------------------//
+let colorRamdonArray=[]
+            //random 0 or 1 - for the computer to play
+            pcPlay = Math.floor(Math.random() * 2)
+           let inputColor = `c-${colorY}`
+            if (pcPlay == 0) {
+                
+                //each item in the category
+                for (let x of colorCategory) {
+
+                    //check if first letter match game letter 
+                    if (x[0] == gameLetter) {
+                        //push the word to array
+                        colorRamdonArray[ramdonWordCount] = x
+                        ramdonWordCount++
+                    }
+                }
+    
+                //create new variable to store the random value
+                let pcRandomWord = colorRamdonArray[Math.floor(Math.random() * colorRamdonArray.length)]
+
+                colorRamdonArray=[]
+                ramdonWordCount=0
+    
+                if (pcRandomWord===undefined) {
+                    pcWord = document.querySelector(`#${inputColor}`)
+                    pcWord.style.color = "orange"
+                    document.querySelector(`#${inputColor}`).setAttribute("value", "NO WORD")
+                } else {
+                    //
+                    document.querySelector(`#${inputColor}`).setAttribute("value", pcRandomWord)
+    
+                    pcWord = document.querySelector(`#${inputColor}`)
+                    pcWord.style.color = "green"
+                    pccountPoints += 10
+                } 
+            }
+            else {
+    
+                pcWord = document.querySelector(`#${inputColor}`)
+                document.querySelector(`#${inputColor}`).setAttribute("value", "YOU GOT ME!")
+                
+                pcWord.style.color = "red"
+                
+            }
+            colorY++
+
+//----------------------------------------------------------------------//
+//  COMPUTER STATE FIELD
+//----------------------------------------------------------------------//
+let stateArray=[]
+        //random 0 or 1 - for the computer to play
+        pcPlay = Math.floor(Math.random() * 2)
+
+        let inputState = `s-${stateY}`
+        if (pcPlay == 0) {
+
+            //each item in the category
+            for (let x of stateCategory) {
+
+                //check if first letter match game letter 
+                if (x[0] == gameLetter) {
+                    //push the word to array
+                    stateArray[ramdonWordCount] = x
+                    ramdonWordCount++
+
+                }
+            }
+
+            //create new variable to store the random value
+
+            let pcRandomWord = stateArray[Math.floor(Math.random() * stateArray.length)]
+
+            stateArray=[]
+            ramdonWordCount=0
+            if (pcRandomWord===undefined) {
+                pcWord = document.querySelector(`#${inputState}`)
+                pcWord.style.color = "orange"
+                document.querySelector(`#${inputState}`).setAttribute("value", "NO WORD")
+                stateY++
+            } else {
+                //
+                document.querySelector(`#${inputState}`).setAttribute("value", pcRandomWord)
+
+                pcWord = document.querySelector(`#${inputState}`)
+                pcWord.style.color = "green"
+                pccountPoints += 10
+
+                stateY++
+            } 
+        }
+        else {
+
+            pcWord = document.querySelector(`#${inputState}`)
+            document.querySelector(`#${inputState}`).setAttribute("value", "YOU GOT ME!")
+            
+            pcWord.style.color = "red"
+            stateY++
+        }
+//----------------------------------------------------------------------//
+//  COMPUTER COUNTRY FIELD
+//----------------------------------------------------------------------//
+
+let contryArray=[]
+pcPlay = Math.floor(Math.random() * 2)
+
+let inputCountry = `co-${countryY}`
+if (pcPlay == 0) {
+    
+    //each item in the category
+    for (let x of countryCategory) {
+        //check if first letter match game letter 
+        if (x[0] == gameLetter) {
+            //push the word to array
+            contryArray[ramdonWordCount] = x
+            ramdonWordCount++
+
+        }
+    }
+
+    //create new variable to store the random value
+
+    let pcRandomWord = contryArray[Math.floor(Math.random() * contryArray.length)]
+
+
+    if (pcRandomWord===undefined) {
+        pcWord = document.querySelector(`#${inputCountry}`)
+        pcWord.style.color = "orange"
+        document.querySelector(`#${inputCountry}`).setAttribute("value", "NO WORD")
+    } else {
+        //
+        document.querySelector(`#${inputCountry}`).setAttribute("value", pcRandomWord)
+
+        pcWord = document.querySelector(`#${inputCountry}`)
+        pcWord.style.color = "green"
+        pccountPoints += 10
+
+    } 
+}
+else {
+
+    pcWord = document.querySelector(`#${inputCountry}`)
+    document.querySelector(`#${inputCountry}`).setAttribute("value", "YOU GOT ME!")
+    
+    pcWord.style.color = "red"
+    
+}
+
+
+countryY++
+//----------------------------------------------------------------------//
+//  SUM'S COMPUTER POINTS
+//----------------------------------------------------------------------//  
+
+
+pcRound += 1
+  
+pcscoreTotal += pccountPoints
+let inputScore = `sc-${w}`
+
+document.querySelector(`#${inputScore}`).setAttribute("value", pccountPoints)
+// document.querySelector("#scoreTop2").setAttribute("value", pcscoreTotal)
+document.getElementById("scoreTop2").innerHTML = `Total: ${pcscoreTotal}`
+ramdonArray = []
+ramdonWordCount = 0
+pccountPoints = 0
+w++
 
 //----------------------------------------------------------------------//
 //  stop clock 
@@ -600,7 +810,6 @@ document.getElementById("li-score").setAttribute("id","li-score_1")
 countRounds+=1
 
 addRewRow()
-pcRandomWord()
 addRoundAlert()
 
 if(countRounds==5)
@@ -747,297 +956,10 @@ const allCategories = [animalCategory,colorCategory,stateCategory,countryCategor
 //----------------------------------------------------------------------//
 //   PC ramdon 
 //----------------------------------------------------------------------//
-let ramdonArray=[]
-let ramdonWordCount = 0
-let inputBox
-let w = 0
-let y=0
-const pcRandomWord = () => {
-    
-    pccountPoints = 0
-    pcRound += 1
-    
-    // get letter og the round
-    // let gameLetter = document.querySelector("#letter").innerHTML
 
-    //loop categories
-    // for (let i in allCategories) {//0 to 4
-    // for (let i=0; i< pcIdRow1.length;i++) {//0 to 4
-        
-    //     //random 0 or 1 - for the computer to play
-    //     pcPlay = Math.floor(Math.random() * 2)
-    //     console.log("this is pcplay: ", pcPlay)
-    //     inputBox = `${pcIdRow1[3]}${y}`
-    //     if (pcPlay == 0) {
-            
-    //         console.log("this is the interpolation",inputBox)
-    //         //each item in the category
-    //         for (let x of countryCategory) {
-    //             //check if first letter match game letter 
-    //             if (x[0] == gameLetter) {
-    //                 //push the word to array
-    //                 ramdonArray[ramdonWordCount] = x
-    //                 ramdonWordCount++
-    //                 // console.log("this is the number of words", ramdonWordCount)
-    //             }
-    //         }
 
-    //         //create new variable to store the random value
-    //         console.log("array: ",ramdonArray)
-    //         let pcRandomWord = ramdonArray[Math.floor(Math.random() * ramdonArray.length)]
-    //         console.log("random word",pcRandomWord)
 
-    //         if (pcRandomWord===undefined) {
-    //             pcWord = document.querySelector(`#${inputBox}`)
-    //             pcWord.style.color = "orange"
-    //             document.querySelector(`#${inputBox}`).setAttribute("value", "NO WORD")
-    //         } else {
-    //             //
-    //             document.querySelector(`#${inputBox}`).setAttribute("value", pcRandomWord)
 
-    //             pcWord = document.querySelector(`#${inputBox}`)
-    //             pcWord.style.color = "green"
-    //             pccountPoints += 10
-    //             console.log("right word:", pcRandomWord)
-    //         } 
-    //     }
-    //     else {
-
-    //         pcWord = document.querySelector(`#${inputBox}`)
-    //         document.querySelector(`#${inputBox}`).setAttribute("value", "YOU GOT ME!")
-            
-    //         pcWord.style.color = "red"
-            
-    //     }
-        
-    //     console.log("pontos", pccountPoints)
-    // }
-    animalField()
-    colorField()
-    countryField()
-    stateField()        
-    pcscoreTotal += pccountPoints
-    let inputScore = `sc-${w}`
-    console.log("input score",inputScore)
-    document.querySelector(`#${inputScore}`).setAttribute("value", pccountPoints)
-    // document.querySelector("#scoreTop2").setAttribute("value", pcscoreTotal)
-    document.getElementById("scoreTop2").innerHTML = `Total: ${pcscoreTotal}`
-    ramdonArray = []
-    ramdonWordCount = 0
-    w++
-    y++
-}
-const animalField = ()=>{
-    let gameLetter = document.querySelector("#letter").innerHTML
-    let animalArray=[]
-            //random 0 or 1 - for the computer to play
-            pcPlay = Math.floor(Math.random() * 2)
-            console.log("this is pcplay: ", pcPlay)
-            let inputBox = `a-${y}`
-            if (pcPlay == 0) {
-                
-                console.log("this is the interpolation",inputBox)
-                //each item in the category
-                for (let x of animalCategory) {
-
-                    //check if first letter match game letter 
-                    if (x[0] == gameLetter) {
-                        //push the word to array
-                        animalArray[ramdonWordCount] = x
-                        ramdonWordCount++
-                        // console.log("this is the number of words", ramdonWordCount)
-                    }
-                }
-               
-                //create new variable to store the random value
-                console.log("array: ",ramdonArray)
-                let pcRandomWord = animalArray[Math.floor(Math.random() * animalArray.length)]
-                console.log("random word",pcRandomWord)
-                animalArray=[]
-                ramdonWordCount=0
-    
-                
-                if (pcRandomWord===undefined) {
-                    pcWord = document.querySelector(`#${inputBox}`)
-                    pcWord.style.color = "orange"
-                    document.querySelector(`#${inputBox}`).setAttribute("value", "NO WORD")
-                } else {
-                    //
-                    document.querySelector(`#${inputBox}`).setAttribute("value", pcRandomWord)
-    
-                    pcWord = document.querySelector(`#${inputBox}`)
-                    pcWord.style.color = "green"
-                    pccountPoints += 10
-                    console.log("right word:", pcRandomWord)
-                } 
-            }
-            else {
-    
-                pcWord = document.querySelector(`#${inputBox}`)
-                document.querySelector(`#${inputBox}`).setAttribute("value", "YOU GOT ME!")
-                
-                pcWord.style.color = "red"
-                
-            }
-}
-
-const colorField = ()=>{
-    let gameLetter = document.querySelector("#letter").innerHTML
-    let colorRamdonArray=[]
-            //random 0 or 1 - for the computer to play
-            pcPlay = Math.floor(Math.random() * 2)
-            console.log("this is pcplay: ", pcPlay)
-           let inputBox = `c-${y}`
-            if (pcPlay == 0) {
-                
-                console.log("this is the interpolation",inputBox)
-                //each item in the category
-                for (let x of colorCategory) {
-
-                    //check if first letter match game letter 
-                    if (x[0] == gameLetter) {
-                        //push the word to array
-                        colorRamdonArray[ramdonWordCount] = x
-                        ramdonWordCount++
-                        // console.log("this is the number of words", ramdonWordCount)
-                    }
-                }
-    
-                //create new variable to store the random value
-                console.log("array: ",colorRamdonArray)
-                let pcRandomWord = colorRamdonArray[Math.floor(Math.random() * colorRamdonArray.length)]
-                console.log("random word",pcRandomWord)
-                colorRamdonArray=[]
-                ramdonWordCount=0
-    
-                if (pcRandomWord===undefined) {
-                    pcWord = document.querySelector(`#${inputBox}`)
-                    pcWord.style.color = "orange"
-                    document.querySelector(`#${inputBox}`).setAttribute("value", "NO WORD")
-                } else {
-                    //
-                    document.querySelector(`#${inputBox}`).setAttribute("value", pcRandomWord)
-    
-                    pcWord = document.querySelector(`#${inputBox}`)
-                    pcWord.style.color = "green"
-                    pccountPoints += 10
-                    console.log("right word:", pcRandomWord)
-                } 
-            }
-            else {
-    
-                pcWord = document.querySelector(`#${inputBox}`)
-                document.querySelector(`#${inputBox}`).setAttribute("value", "YOU GOT ME!")
-                
-                pcWord.style.color = "red"
-                
-            }
-}
-const stateField = ()=>{
-    let gameLetter = document.querySelector("#letter").innerHTML
-    let stateArray=[]
-            //random 0 or 1 - for the computer to play
-            pcPlay = Math.floor(Math.random() * 2)
-            console.log("this is pcplay: ", pcPlay)
-            let inputBox = `s-${y}`
-            if (pcPlay == 0) {
-                
-                console.log("this is the interpolation",inputBox)
-                //each item in the category
-                for (let x of stateCategory) {
-                    // console.log("this is x", x)
-                    console.log("this is i", stateCategory)
-                    // console.log("this is x", allCategories[i])
-                    //check if first letter match game letter 
-                    if (x[0] == gameLetter) {
-                        //push the word to array
-                        stateArray[ramdonWordCount] = x
-                        ramdonWordCount++
-                        // console.log("this is the number of words", ramdonWordCount)
-                    }
-                }
-    
-                //create new variable to store the random value
-                console.log("array: ",stateArray)
-                let pcRandomWord = stateArray[Math.floor(Math.random() * stateArray.length)]
-                console.log("random word",pcRandomWord)
-                stateArray=[]
-                ramdonWordCount=0
-                if (pcRandomWord===undefined) {
-                    pcWord = document.querySelector(`#${inputBox}`)
-                    pcWord.style.color = "orange"
-                    document.querySelector(`#${inputBox}`).setAttribute("value", "NO WORD")
-                } else {
-                    //
-                    document.querySelector(`#${inputBox}`).setAttribute("value", pcRandomWord)
-    
-                    pcWord = document.querySelector(`#${inputBox}`)
-                    pcWord.style.color = "green"
-                    pccountPoints += 10
-                    console.log("right word:", pcRandomWord)
-                } 
-            }
-            else {
-    
-                pcWord = document.querySelector(`#${inputBox}`)
-                document.querySelector(`#${inputBox}`).setAttribute("value", "YOU GOT ME!")
-                
-                pcWord.style.color = "red"
-                
-            }
-}
-
-const countryField = ()=>{
-    let gameLetter = document.querySelector("#letter").innerHTML
-    let contryArray=[]
-    pcPlay = Math.floor(Math.random() * 2)
-    console.log("this is pcplay: ", pcPlay)
-    let inputBox = `co-${y}`
-    if (pcPlay == 0) {
-        
-        console.log("this is the interpolation",inputBox)
-        //each item in the category
-        for (let x of countryCategory) {
-            //check if first letter match game letter 
-            if (x[0] == gameLetter) {
-                //push the word to array
-                contryArray[ramdonWordCount] = x
-                ramdonWordCount++
-                // console.log("this is the number of words", ramdonWordCount)
-            }
-        }
-
-        //create new variable to store the random value
-        console.log("array: ",contryArray)
-        let pcRandomWord = contryArray[Math.floor(Math.random() * contryArray.length)]
-        console.log("random word",pcRandomWord)
-
-        if (pcRandomWord===undefined) {
-            pcWord = document.querySelector(`#${inputBox}`)
-            pcWord.style.color = "orange"
-            document.querySelector(`#${inputBox}`).setAttribute("value", "NO WORD")
-        } else {
-            //
-            document.querySelector(`#${inputBox}`).setAttribute("value", pcRandomWord)
-
-            pcWord = document.querySelector(`#${inputBox}`)
-            pcWord.style.color = "green"
-            pccountPoints += 10
-            console.log("right word:", pcRandomWord)
-        } 
-    }
-    else {
-
-        pcWord = document.querySelector(`#${inputBox}`)
-        document.querySelector(`#${inputBox}`).setAttribute("value", "YOU GOT ME!")
-        
-        pcWord.style.color = "red"
-        
-    }
-    
-    console.log("pontos", pccountPoints)
-}
-   
 
 
 
