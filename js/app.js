@@ -16,14 +16,7 @@ const liNewCategories = ["li-animal","li-color","li-state","li-country","li-scor
 const liOldCategories = ["li-animal_1","li-color_1","li-state_1","li-country_1","li-score_1"]
 const buttonPlayers = ["RULES","PL vs CP", "PL vs PL"]
 
-// computer
 
-const pcliNewCategories = ["li-animal2","li-color2","li-state2","li-country2","li-score2"]
-const pcliOldCategories = ["li-animal_2","li-color_2","li-state_2","li-country_2","li-score_1"]
-const pcinputCategories = ["animal_2","color_2","state_2","country_2","score_2"]
-const pcliCategoriesChanged = ["animal_3","color_3","state_3","country_3","score_3"]
-const pcidCategories = ["animal2","color2","state2","country2","score2"]
-const pcolCategories = ["ol-animal2","ol-color2","ol-state2","ol-country2","ol-score2"]
 
 
 //----------------------------------------------------------------------//
@@ -251,7 +244,7 @@ const countryCategory = [
 //----------------------------------------------------------------------//
 //  ALL CATEGORIES
 //----------------------------------------------------------------------//
-const allCategories = [animalCategory,colorCategory,stateCategory,countryCategory]
+
 //----------------------------------------------------------------------//
 // CLASSES - Player/Categories   
 //----------------------------------------------------------------------//
@@ -319,7 +312,7 @@ const start = () => {
 //----------------------------------------------------------------------//
 const addButtonsMultiplayer = ()=> {
 
-    for (let i=0;i<=2;i++){
+    for (let i=0;i<=1;i++){
         let div = document.createElement("div")
         div.setAttribute("id",divPlyer[i])
         let divP = document.querySelector("#players") 
@@ -335,7 +328,7 @@ const addButtonsMultiplayer = ()=> {
     document.getElementById("btn-rules").addEventListener('click', rules);
     document.getElementById("btn-rule").addEventListener('click', rules);
     document.getElementById("btn-player_1").addEventListener('click', singlePlayer);
-    document.getElementById("btn-player_2").addEventListener('click', multiPlayer);
+    //document.getElementById("btn-player_2").addEventListener('click', multiPlayer);
 }
 //----------------------------------------------------------------------//
 //  RESTART button - reload function
@@ -353,7 +346,7 @@ const restart = () => {
 //  RULES button - new window function    
 //----------------------------------------------------------------------//
 const rules =()=>{
-    window.open("../stop/rules.html");
+    window.open("rules.html");
 }
 //----------------------------------------------------------------------//
 //  SINGLE PLAYER - clear screen and add single buttons and inputs
@@ -437,10 +430,6 @@ const ready=()=>{
     
 }
 
-
-
-
-
 //----------------------------------------------------------------------//
 //  STOP - locks time and categories  
 //----------------------------------------------------------------------// 
@@ -451,10 +440,7 @@ const stop=()=>{
 //----------------------------------------------------------------------//
 //  Confirm if Animal is in the array and give 10+ 
 //----------------------------------------------------------------------// 
-
-
-pcGame()
-    pcRandomWord()
+    // pcRandomWord()
     let animales = document.querySelector("#animal_1").value
     let word = document.querySelector("#animal_1")
     let comparissonAnimal = document.querySelector("#letter").innerHTML
@@ -576,18 +562,18 @@ if(colorCategory[j] == colorValue){
 //  add to class 
 //----------------------------------------------------------------------//    
 
-    if(animales==document.querySelector("#score_2").value){
-        alert("It's a tie for a animal")
-    }
-    if(colorValue==document.querySelector("#color_2").value){
-        alert("It's a tie for color")
-    }
-    if(stateValue==document.querySelector("#state_2").value){
-        alert("It's a tie for state")
-    }
-    if(countryValue==document.querySelector("#country_2").value){
-        alert("It's a tie for country")
-    }
+    // if(animales==document.querySelector("#score_2").value){
+    //     alert("It's a tie for a animal")
+    // }
+    // if(colorValue==document.querySelector("#color_2").value){
+    //     alert("It's a tie for color")
+    // }
+    // if(stateValue==document.querySelector("#state_2").value){
+    //     alert("It's a tie for state")
+    // }
+    // if(countryValue==document.querySelector("#country_2").value){
+    //     alert("It's a tie for country")
+    // }
     
 
 //----------------------------------------------------------------------//
@@ -604,33 +590,19 @@ document.getElementById("color_1").setAttribute("id","color_0")
 document.getElementById("state_1").setAttribute("id","state_0")
 document.getElementById("country_1").setAttribute("id","country_0")
 document.getElementById("score_1").setAttribute("id","score_0")
+
 document.getElementById("li-animal").setAttribute("id","li-animal_1")
 document.getElementById("li-color").setAttribute("id","li-color_1")
 document.getElementById("li-state").setAttribute("id","li-state_1")
 document.getElementById("li-country").setAttribute("id","li-country_1")
 document.getElementById("li-score").setAttribute("id","li-score_1")
 
-
-document.getElementById("animal_2").setAttribute("id","animal_3")
-document.getElementById("color_2").setAttribute("id","color_3")
-document.getElementById("state_2").setAttribute("id","state_3")
-document.getElementById("country_2").setAttribute("id","country_3")
-document.getElementById("score_2").setAttribute("id","score_3")
-
-
-
-document.getElementById("li-animal2").setAttribute("id","li-animal_2")
-document.getElementById("li-color2").setAttribute("id","li-color_2")
-document.getElementById("li-state2").setAttribute("id","li-state_2")
-document.getElementById("li-country2").setAttribute("id","li-country_2")
-document.getElementById("li-score2").setAttribute("id","li-score_2")
-
-
 countRounds+=1
 
 addRewRow()
+pcRandomWord()
 addRoundAlert()
-// pcRandomWord()
+
 if(countRounds==5)
 {
     pcScore = document.querySelector("#scoreTop2").value
@@ -769,90 +741,304 @@ const addRewRow =()=>{
         }
     }
 
+const pcIdCategories = ["animal2","color2","state2","country2","score2"]
+const pcIdRow1 = ["a-","c-","s-","co-"]
+const allCategories = [animalCategory,colorCategory,stateCategory,countryCategory]
 //----------------------------------------------------------------------//
 //   PC ramdon 
 //----------------------------------------------------------------------//
 let ramdonArray=[]
 let ramdonWordCount = 0
-let pcWordArray=[]
+let inputBox
+let w = 0
+let y=0
 const pcRandomWord = () => {
-
+    
     pccountPoints = 0
     pcRound += 1
+    
+    // get letter og the round
+    // let gameLetter = document.querySelector("#letter").innerHTML
 
-    let gameLetter = document.querySelector("#letter").innerHTML
-    for (i in allCategories) {//0 to 4
-        pcPlay = Math.floor(Math.random() * 2)
-        if (pcPlay == 0) {
+    //loop categories
+    // for (let i in allCategories) {//0 to 4
+    // for (let i=0; i< pcIdRow1.length;i++) {//0 to 4
+        
+    //     //random 0 or 1 - for the computer to play
+    //     pcPlay = Math.floor(Math.random() * 2)
+    //     console.log("this is pcplay: ", pcPlay)
+    //     inputBox = `${pcIdRow1[3]}${y}`
+    //     if (pcPlay == 0) {
+            
+    //         console.log("this is the interpolation",inputBox)
+    //         //each item in the category
+    //         for (let x of countryCategory) {
+    //             //check if first letter match game letter 
+    //             if (x[0] == gameLetter) {
+    //                 //push the word to array
+    //                 ramdonArray[ramdonWordCount] = x
+    //                 ramdonWordCount++
+    //                 // console.log("this is the number of words", ramdonWordCount)
+    //             }
+    //         }
 
-            for (x of allCategories[i]) {
-                if (x[0] == gameLetter) {
-                    ramdonArray[ramdonWordCount] = x
-                    ramdonWordCount++
-                    console.log("this is the number of words", ramdonWordCount)
-                }
-            }
+    //         //create new variable to store the random value
+    //         console.log("array: ",ramdonArray)
+    //         let pcRandomWord = ramdonArray[Math.floor(Math.random() * ramdonArray.length)]
+    //         console.log("random word",pcRandomWord)
 
-            let pcRandomWord = ramdonArray[Math.floor(Math.random() * ramdonArray.length)]
-            if (pcRandomWord===undefined) {
-                pcWord = document.querySelector(`#${pcinputCategories[i]}`)
-                pcWord.style.color = "red"
-                pcWordArray[i]=document.querySelector(`#${pcinputCategories[i]}`).setAttribute("value", "NO WORD")
-                pcWordArray[i]=document.querySelector(`#${pcinputCategories[i]}`).value
-            } else {
-                pcWordArray[i]=document.querySelector(`#${pcinputCategories[i]}`).setAttribute("value", pcRandomWord)
-                pcWordArray[i]=document.querySelector(`#${pcinputCategories[i]}`).value
+    //         if (pcRandomWord===undefined) {
+    //             pcWord = document.querySelector(`#${inputBox}`)
+    //             pcWord.style.color = "orange"
+    //             document.querySelector(`#${inputBox}`).setAttribute("value", "NO WORD")
+    //         } else {
+    //             //
+    //             document.querySelector(`#${inputBox}`).setAttribute("value", pcRandomWord)
 
-                pcWord = document.querySelector(`#${pcinputCategories[i]}`)
-                pcWord.style.color = "green"
-                pccountPoints += 10
-                console.log("right word:", pcRandomWord)
-            }
-        }
-        else {
+    //             pcWord = document.querySelector(`#${inputBox}`)
+    //             pcWord.style.color = "green"
+    //             pccountPoints += 10
+    //             console.log("right word:", pcRandomWord)
+    //         } 
+    //     }
+    //     else {
 
-            pcWord = document.querySelector(`#${pcinputCategories[i]}`)
-            document.querySelector(`#${pcinputCategories[i]}`).setAttribute("value", "YOU GOT ME!")
-            pcWordArray[i]= "YOU GOT ME"
-            pcWord.style.color = "red"
-        }
-        console.log("pontos", pccountPoints)
-
-        computerClass(pcWordArray[0],pcWordArray[1],pcWordArray[2],pcWordArray[3],pccountPoints)
-    }
+    //         pcWord = document.querySelector(`#${inputBox}`)
+    //         document.querySelector(`#${inputBox}`).setAttribute("value", "YOU GOT ME!")
+            
+    //         pcWord.style.color = "red"
+            
+    //     }
+        
+    //     console.log("pontos", pccountPoints)
+    // }
+    animalField()
+    colorField()
+    countryField()
+    stateField()        
     pcscoreTotal += pccountPoints
-
-    document.querySelector("#score_2").setAttribute("value", pccountPoints)
+    let inputScore = `sc-${w}`
+    console.log("input score",inputScore)
+    document.querySelector(`#${inputScore}`).setAttribute("value", pccountPoints)
     // document.querySelector("#scoreTop2").setAttribute("value", pcscoreTotal)
     document.getElementById("scoreTop2").innerHTML = `Total: ${pcscoreTotal}`
     ramdonArray = []
     ramdonWordCount = 0
+    w++
+    y++
+}
+const animalField = ()=>{
+    let gameLetter = document.querySelector("#letter").innerHTML
+    let animalArray=[]
+            //random 0 or 1 - for the computer to play
+            pcPlay = Math.floor(Math.random() * 2)
+            console.log("this is pcplay: ", pcPlay)
+            let inputBox = `a-${y}`
+            if (pcPlay == 0) {
+                
+                console.log("this is the interpolation",inputBox)
+                //each item in the category
+                for (let x of animalCategory) {
+
+                    //check if first letter match game letter 
+                    if (x[0] == gameLetter) {
+                        //push the word to array
+                        animalArray[ramdonWordCount] = x
+                        ramdonWordCount++
+                        // console.log("this is the number of words", ramdonWordCount)
+                    }
+                }
+               
+                //create new variable to store the random value
+                console.log("array: ",ramdonArray)
+                let pcRandomWord = animalArray[Math.floor(Math.random() * animalArray.length)]
+                console.log("random word",pcRandomWord)
+                animalArray=[]
+                ramdonWordCount=0
+    
+                
+                if (pcRandomWord===undefined) {
+                    pcWord = document.querySelector(`#${inputBox}`)
+                    pcWord.style.color = "orange"
+                    document.querySelector(`#${inputBox}`).setAttribute("value", "NO WORD")
+                } else {
+                    //
+                    document.querySelector(`#${inputBox}`).setAttribute("value", pcRandomWord)
+    
+                    pcWord = document.querySelector(`#${inputBox}`)
+                    pcWord.style.color = "green"
+                    pccountPoints += 10
+                    console.log("right word:", pcRandomWord)
+                } 
+            }
+            else {
+    
+                pcWord = document.querySelector(`#${inputBox}`)
+                document.querySelector(`#${inputBox}`).setAttribute("value", "YOU GOT ME!")
+                
+                pcWord.style.color = "red"
+                
+            }
 }
 
+const colorField = ()=>{
+    let gameLetter = document.querySelector("#letter").innerHTML
+    let colorRamdonArray=[]
+            //random 0 or 1 - for the computer to play
+            pcPlay = Math.floor(Math.random() * 2)
+            console.log("this is pcplay: ", pcPlay)
+           let inputBox = `c-${y}`
+            if (pcPlay == 0) {
+                
+                console.log("this is the interpolation",inputBox)
+                //each item in the category
+                for (let x of colorCategory) {
 
-const pcGame =()=>{
-    if (countRoundNumber !==1) {
-        if (countRoundNumber !==1) 
-        for (let i = 0; i <=4; i++) {
-            //new pc li
-            let pcnewLi = document.createElement("li")
-            pcnewLi.setAttribute("id", pcliNewCategories[i])
-            let pcolCat = document.querySelector(`#${pcolCategories[i]}`)
-            pcolCat.appendChild(pcnewLi)
-            //new pc input
-            let pcinputNewRow = document.createElement("input")
-            pcinputNewRow.setAttribute("id", pcinputCategories[i])
-            pcinputNewRow.setAttribute("class", "li2")
-            let pcliCat = document.querySelector(`#${pcliNewCategories[i]}`)
-            pcliCat.appendChild(pcinputNewRow)
-            document.querySelector(`#${pcinputCategories[i]}`).disabled = true;
+                    //check if first letter match game letter 
+                    if (x[0] == gameLetter) {
+                        //push the word to array
+                        colorRamdonArray[ramdonWordCount] = x
+                        ramdonWordCount++
+                        // console.log("this is the number of words", ramdonWordCount)
+                    }
+                }
+    
+                //create new variable to store the random value
+                console.log("array: ",colorRamdonArray)
+                let pcRandomWord = colorRamdonArray[Math.floor(Math.random() * colorRamdonArray.length)]
+                console.log("random word",pcRandomWord)
+                colorRamdonArray=[]
+                ramdonWordCount=0
+    
+                if (pcRandomWord===undefined) {
+                    pcWord = document.querySelector(`#${inputBox}`)
+                    pcWord.style.color = "orange"
+                    document.querySelector(`#${inputBox}`).setAttribute("value", "NO WORD")
+                } else {
+                    //
+                    document.querySelector(`#${inputBox}`).setAttribute("value", pcRandomWord)
+    
+                    pcWord = document.querySelector(`#${inputBox}`)
+                    pcWord.style.color = "green"
+                    pccountPoints += 10
+                    console.log("right word:", pcRandomWord)
+                } 
+            }
+            else {
+    
+                pcWord = document.querySelector(`#${inputBox}`)
+                document.querySelector(`#${inputBox}`).setAttribute("value", "YOU GOT ME!")
+                
+                pcWord.style.color = "red"
+                
+            }
+}
+const stateField = ()=>{
+    let gameLetter = document.querySelector("#letter").innerHTML
+    let stateArray=[]
+            //random 0 or 1 - for the computer to play
+            pcPlay = Math.floor(Math.random() * 2)
+            console.log("this is pcplay: ", pcPlay)
+            let inputBox = `s-${y}`
+            if (pcPlay == 0) {
+                
+                console.log("this is the interpolation",inputBox)
+                //each item in the category
+                for (let x of stateCategory) {
+                    // console.log("this is x", x)
+                    console.log("this is i", stateCategory)
+                    // console.log("this is x", allCategories[i])
+                    //check if first letter match game letter 
+                    if (x[0] == gameLetter) {
+                        //push the word to array
+                        stateArray[ramdonWordCount] = x
+                        ramdonWordCount++
+                        // console.log("this is the number of words", ramdonWordCount)
+                    }
+                }
+    
+                //create new variable to store the random value
+                console.log("array: ",stateArray)
+                let pcRandomWord = stateArray[Math.floor(Math.random() * stateArray.length)]
+                console.log("random word",pcRandomWord)
+                stateArray=[]
+                ramdonWordCount=0
+                if (pcRandomWord===undefined) {
+                    pcWord = document.querySelector(`#${inputBox}`)
+                    pcWord.style.color = "orange"
+                    document.querySelector(`#${inputBox}`).setAttribute("value", "NO WORD")
+                } else {
+                    //
+                    document.querySelector(`#${inputBox}`).setAttribute("value", pcRandomWord)
+    
+                    pcWord = document.querySelector(`#${inputBox}`)
+                    pcWord.style.color = "green"
+                    pccountPoints += 10
+                    console.log("right word:", pcRandomWord)
+                } 
+            }
+            else {
+    
+                pcWord = document.querySelector(`#${inputBox}`)
+                document.querySelector(`#${inputBox}`).setAttribute("value", "YOU GOT ME!")
+                
+                pcWord.style.color = "red"
+                
+            }
+}
+
+const countryField = ()=>{
+    let gameLetter = document.querySelector("#letter").innerHTML
+    let contryArray=[]
+    pcPlay = Math.floor(Math.random() * 2)
+    console.log("this is pcplay: ", pcPlay)
+    let inputBox = `co-${y}`
+    if (pcPlay == 0) {
+        
+        console.log("this is the interpolation",inputBox)
+        //each item in the category
+        for (let x of countryCategory) {
+            //check if first letter match game letter 
+            if (x[0] == gameLetter) {
+                //push the word to array
+                contryArray[ramdonWordCount] = x
+                ramdonWordCount++
+                // console.log("this is the number of words", ramdonWordCount)
+            }
         }
-}}
-let computerRound = new Rounds ()
-const computerClass = (animal,color,state,country,score)=>{
-    computerRound  = new Rounds(animal,color,state,country,score)
-    console.log("this is the computer ",computerRound)
+
+        //create new variable to store the random value
+        console.log("array: ",contryArray)
+        let pcRandomWord = contryArray[Math.floor(Math.random() * contryArray.length)]
+        console.log("random word",pcRandomWord)
+
+        if (pcRandomWord===undefined) {
+            pcWord = document.querySelector(`#${inputBox}`)
+            pcWord.style.color = "orange"
+            document.querySelector(`#${inputBox}`).setAttribute("value", "NO WORD")
+        } else {
+            //
+            document.querySelector(`#${inputBox}`).setAttribute("value", pcRandomWord)
+
+            pcWord = document.querySelector(`#${inputBox}`)
+            pcWord.style.color = "green"
+            pccountPoints += 10
+            console.log("right word:", pcRandomWord)
+        } 
+    }
+    else {
+
+        pcWord = document.querySelector(`#${inputBox}`)
+        document.querySelector(`#${inputBox}`).setAttribute("value", "YOU GOT ME!")
+        
+        pcWord.style.color = "red"
+        
+    }
+    
+    console.log("pontos", pccountPoints)
 }
+   
+
 
 
 

@@ -12,6 +12,9 @@ https://getbootstrap.com/docs/4.3/components/card/#body
                     DISPLAY GAME    
 -------------------------------------------------------
  */
+ body{
+    background-color: bisque;
+ }
 #playing-game,#players1
 {
     display:none
